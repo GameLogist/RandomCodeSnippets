@@ -1,3 +1,6 @@
+/*
+Kruskal's algorithm finds the edge-weighted graph with the smallest forest that it can cover. If the graph is connected, it finds a tree that can cover all of the connections. (A minimum spanning tree of a connected graph is a subset of the edges that forms a tree that includes every vertex and where the sum of the weights of all the edges in the tree is the smallest.
+*/
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -33,11 +36,14 @@ public:
 		}
 	}
 
+	// Find which component does p belong to, takes O(1) time
 	int find(int p){
+		// Find root of the component
 		int root=p;
 		while(root!=link[root])
 			root=link[root];
 
+		// Path compression code here so that lookup can be done in O(1)
 		while(p!=root){
 			int next = link[p];
 			link[p] = root;
@@ -47,10 +53,12 @@ public:
 		return root;
 	}
 
+	// find whether both a and b are in same component or not
 	bool same(int a, int b){
 		return find(a)==find(b);
 	}
 
+	// Unify components containing vertices a & b
 	void unify(int a, int b){
 		int x = find(a);
 		int y = find(b);
@@ -66,6 +74,7 @@ public:
 
 };
 
+// Find min spanning cost of the graph(Elog E or Elog V)
 int Graph :: kruskalMST(){
 		int max_wt=0;
 		
@@ -90,17 +99,13 @@ int main(){
 	int V = 9, E = 14; 
     Graph g(V, E); 
   
+    //  making above shown graph 
     g.addEdge(0, 1, 4); 
     g.addEdge(0, 7, 8); 
     g.addEdge(1, 2, 8); 
     g.addEdge(1, 7, 11); 
     g.addEdge(2, 3, 7); 
     g.addEdge(2, 8, 2); 
-    g.addEdge(2, 5, 4); 
-    g.addEdge(3, 4, 9); 
-    g.addEdge(3, 5, 14); 
-    g.addEdge(4, 5, 10); 
-    g.addEdge(5, 6, 2); 
     g.addEdge(6, 7, 1); 
     g.addEdge(6, 8, 6); 
     g.addEdge(7, 8, 7); 
